@@ -1,15 +1,15 @@
-NAME =		easyfind
+NAME =		BitcoinExchange
 
 CXX =		c++
 
 CXXFLAGS =	-Wall -Wextra -Werror -std=c++98
 
 SRCS =		main.cpp
-			
+			BitcoinExchange
 
 OBJS =		$(SRCS:.cpp=.o)
 
-HEADERS =	easyfind.hpp
+HEADERS =	BitcoinExchange.hpp
 
 # ANSI color codes
 YELLOW = \033[1;33m
