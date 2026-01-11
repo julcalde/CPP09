@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 15:28:26 by julcalde          #+#    #+#             */
-/*   Updated: 2026/01/11 18:19:44 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:29:02 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ std::string BitcoinExchange::trim(const std::string& s) const
 
 bool BitcoinExchange::isValidDate(const std::string& date) const
 {
-	if (date.size() != 10 || date[4] != "-" || date[7] != "-")
+	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
 		return (false);
 	for (int i = 0; i < 10; ++i)
 	{
