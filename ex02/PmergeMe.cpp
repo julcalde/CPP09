@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:10 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/16 17:30:13 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:56:00 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,3 +74,25 @@ void PmergeMe::sortVector(std::vector<int>& vec)
 		return ;
 	fordJohnsonVector(vec, 0, vec.size() - 1);
 }
+
+static void mergeInsertList(std::list<int>& lst, std::list<int>::iterator left, std::list<int>::iterator mid, std::list<int>::iterator right)
+{
+	std::list<int> tmp;
+	std::list<int>::iterator iter1 = left, iter2 = ++mid;
+	
+	while (iter1 != mid && iter2 != right)
+	{
+		if (*iter1 <= *iter2)
+			tmp.push_back(*iter1++);
+		else
+			tmp.push_back(*iter2++);
+	}
+	while (iter1 != mid)
+		tmp.push_back(*iter1++);
+	while (iter2 != right)
+		tmp.push_back(*iter2++);
+	std::list<int>::iterator dst = left;
+	for (std::list<int>::iterator src = tmp.begin(); src != tmp.end(); ++src, ++dst);
+		*dst = *src; // must check on Linux machine if it gives "unidentified error" or not
+}
+
