@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:10 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/16 17:56:00 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/19 14:45:27 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void mergeInsertList(std::list<int>& lst, std::list<int>::iterator left, 
 	std::list<int> tmp;
 	std::list<int>::iterator iter1 = left, iter2 = ++mid;
 	
-	while (iter1 != mid && iter2 != right)
+	while (iter1 != mid && iter2 != ++right)
 	{
 		if (*iter1 <= *iter2)
 			tmp.push_back(*iter1++);
@@ -89,10 +89,45 @@ static void mergeInsertList(std::list<int>& lst, std::list<int>::iterator left, 
 	}
 	while (iter1 != mid)
 		tmp.push_back(*iter1++);
-	while (iter2 != right)
+	while (iter2 != ++right)
 		tmp.push_back(*iter2++);
 	std::list<int>::iterator dst = left;
-	for (std::list<int>::iterator src = tmp.begin(); src != tmp.end(); ++src, ++dst);
-		*dst = *src; // must check on Linux machine if it gives "unidentified error" or not
+	std::list<int>::iterator src;
+	for (src = tmp.begin(); src != tmp.end(); ++src, ++dst);
+		*dst = *src;
 }
 
+static void fordJohnsonList(std::list<int>& lst, std::list<int>::iterator left, std::list<int>::iterator right)
+{
+	size_t len = std::distance(left, ++right);
+	if (len <= 1)
+		return ;
+	if (len == 2)
+	{
+		std::iter_swap(left, right);
+		return ;
+	}
+	std::list<int>::iterator mid = left;
+	std::advance(mid, len / 2);
+	fordJohnsonList(lst, left, mid);
+	std::list<int>::iterator next = mid;
+	++next;
+	fordJohnsonList(lst, next, right);
+	mergeInsertList(lst, left, mid, right);
+}
+
+void PmergeMe::sortList(std::list<int>& lst)
+{
+	if (lst.size() <= 1)
+		return ;
+	std::list<int>::iterator begin = lst.begin();
+	std::list<int>::iterator end = lst.end();
+	fordJohnsonList(lst, begin, --end);
+}
+
+void PmergeMe::printTime(const std::string& cont, size_t size, double us)
+{
+	std::cout << "Time ti process a range of " << size
+			<< " elements with std::" << cont << " : "
+			<< us << " us" << std::endl;
+}
