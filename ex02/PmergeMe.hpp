@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:12 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/16 16:37:44 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/29 15:20:26 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class PmergeMe
 		static void sortVector(std::vector<int>& vec);
 		static void sortList(std::list<int>& lst);
 		static void printTime(const std::string& containerType, size_t size, double us);
+		static double getTime();
 };
 
 #endif
