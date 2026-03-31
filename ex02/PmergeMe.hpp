@@ -6,15 +6,15 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:12 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/29 15:20:26 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:45:24 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
-#include <vector>
-#include <list>
+#include <vector> // Dynamic array with random access
+#include <list>	// Doubly linked list with bidirectional access
 #include <string>
 
 class PmergeMe

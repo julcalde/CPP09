@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:10 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/29 15:44:45 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:16:03 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void PmergeMe::sortVector(std::vector<int>& vec)
 	fordJohnsonVector(vec, 0, vec.size() - 1);
 }
 
-static void mergeInsertList(std::list<int>::iterator left, std::list<int>::iterator mid, std::list<int>::iterator right)
+static void mergeInsertList(std::list<int>::iterator left,
+							std::list<int>::iterator mid,
+							std::list<int>::iterator right)
 {
 	std::list<int> tmp;
 	std::list<int>::iterator iter1 = left, iter2 = mid;
@@ -104,7 +106,17 @@ static void fordJohnsonList(std::list<int>::iterator left, std::list<int>::itera
 		return ;
 	if (len == 2)
 	{
-		std::iter_swap(left, std::prev(right));
+		/* 'std::prev()' derives from iterator library.
+			It is used to get the previous iterator from 'right',
+			which is the last element in the range.
+			It works only if using std=c++11 or later,
+			but I'm using std=c++98, so I have to do it manually.
+		*/
+		// std::iter_swap(left, std::prev(right));
+		
+		std::list<int>::iterator prev_right = right;
+		--prev_right;
+		std::iter_swap(left, prev_right);
 		return ;
 	}
 	std::list<int>::iterator mid = left;
