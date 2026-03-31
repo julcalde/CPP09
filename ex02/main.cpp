@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:53:07 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/29 15:53:08 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:55:12 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 }
 
 /* For testing with a lot of number use the following command:
+
 	./PmergeMe `jot -r 3000 1 100000 | tr '\n' ' '`
 
 	jot			:stands for "just another output tool" and is used to generate random numbers.
@@ -80,4 +81,15 @@ int main(int argc, char** argv)
 	100000		:is the maximum value of the random numbers.
 	tr '\n' ' '	:is used to replace the newline characters with spaces, so that the
 				numbers are passed as separate arguments to the program.
+
+	OR
+
+	./PmergeMe `shuf -i 1-100000 -n 3000 | tr "\n" " "`
+	shuf		:stands for "shuffle" and is used to generate random numbers.
+	-i 1-100000	:option is used to specify the range of numbers to generate,
+				in this case from 1 to 100000.
+	-n 3000		:option is used to specify the number of random numbers to
+				generate, in this case 3000.
+	tr "\n" " "	:is used to replace the newline characters with spaces, so that
+				the numbers are passed as separate arguments to the program.
 */
