@@ -6,7 +6,7 @@
 /*   By: julcalde <julcalde@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 15:28:26 by julcalde          #+#    #+#             */
-/*   Updated: 2026/03/15 14:19:06 by julcalde         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:13:43 by julcalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,23 @@ bool BitcoinExchange::loadDatabase(const std::string& filename)
 
 float BitcoinExchange::getRate(const std::string& date) const
 {
+	// if DB is empty, 0,0f is returned, indicating that no valid rate could be found for the given date
+	if (_database.empty())
+		return (0.0f);
+	// first we try to find an exact match for the given date, if found return the corresponding rate
 	std::map<std::string, float>::const_iterator it = _database.find(date);
 	if (it != _database.end())
 		return (it->second);
-	/* lower_bound returns the first element that is not less than the given date
-		and we want the greatest element that is less than or equal to the given date */
+	// if no exact match is found, we use lower_bound to find the first date that is the same or after (newer than) the given date.
 	it = _database.lower_bound(date);
+	// if the iterator points to the beginning of the map, it means that all dates in the database are after (newer than) the given date, so we return the rate of the first entry
 	if (it == _database.begin())
-		return (0.0f); // before the first date in the database
-	if (it == _database.end() || it->first != date) // if the date is not found, we need to step back to get the last valid rate
+		return (it->second);
+	// if the iterator points to the end of the map, it means that all dates in the database are before (older than) the given date, so we return the rate of the last entry
+	if (it == _database.end())
 		--it;
+	// if all checks above fail, the iterator points to the first date before (older than) the given date, and the corresponding rate is returned.
+	--it;
 	return (it->second);
 }
 
@@ -139,14 +146,14 @@ void BitcoinExchange::processInput(const std::string& filename) const
 	*/
 		if (!std::getline(iss, date, '|') || !std::getline(iss, valueString))
 		{
-			std::cerr << "Error: bad format input: " << trim(line) << std::endl;
+			std::cerr << "Error: bad input => " << trim(line) << std::endl;
 			continue ;
 		}
 		date = trim(date);
 		valueString = trim(valueString);
 		if (!isValidDate(date))
 		{
-			std::cerr << "Error: bad date input: " << date << std::endl;
+			std::cerr << "Error: bad input => " << date << std::endl;
 			continue ;
 		}
 		float value;
@@ -155,7 +162,7 @@ void BitcoinExchange::processInput(const std::string& filename) const
 			if (value < 0)
 				std::cerr << "Error: not a positive number." << std::endl;
 			else
-				std::cerr << "Error: too large of a number." << std::endl;
+				std::cerr << "Error: too large a number." << std::endl;
 			continue ;
 		}
 		float rate = getRate(date);
